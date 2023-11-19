@@ -29,11 +29,11 @@ FROM orders
 INNER JOIN customers  on  `customers`.customer_id = `orders`.customer_id;
 
 -- 5.  Tipos de producto vendidos
-SELECT `categories`.category_id, category_name, product_name, SUM(quantity*`order_details`.unit_price - quantity*`order_details`.unit_price*discount) As "TotalSales"
-FROM products
-INNER JOIN categories on `categories`.category_id = `products`.category_id
-INNER JOIN order_details  on  `order_details`.product_id = `products`.product_id
-GROUP BY `categories`.category_name, product_name; -- NO ME SALE
+select c.category_id, c.category_name, p.product_name, SUM(o.unit_price*o.quantity) AS venta
+from products as p
+inner join categories as c on p.category_id = c.category_id
+inner join order_details as o on p.product_id = o.product_id
+group by c.category_id, c.category_name, p.product_name;
 
 -- 6.  Qué empresas tenemos en la BBDD Northwind
 SELECT order_id, company_name, order_date
