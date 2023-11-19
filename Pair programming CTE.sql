@@ -41,8 +41,11 @@ GROUP BY  customer_id, company_name
 
 
 EJERCICIO 5
-WITH cantidas AS
-(SELECT product_name, 
+WITH tabla AS (SELECT product_id, AVG (quantity) AS media -- calculamos la media de cada uo de los productos
+FROM order_details
+GROUP BY product_id)
+SELECT product_name, media
 FROM products
-
+INNER JOIN tabla 
+ON products.product_id = tabla.product_id;
 
